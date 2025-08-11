@@ -1,0 +1,38 @@
+package com.dohyun.blog.security.handler;
+
+import com.dohyun.blog.global.response.ApiResponse;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
+import java.util.List;
+
+@Component
+public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+
+    private final ObjectMapper mapper;
+
+    public CustomAuthenticationSuccessHandler(ObjectMapper mapper) {
+        this.mapper = mapper;
+    }
+
+    @Override
+    public void onAuthenticationSuccess(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            Authentication authentication) throws IOException, ServletException {
+
+        response.setStatus(HttpStatus.OK.value());
+        response.setContentType("application/json; charset=UTF-8");
+
+        ApiResponse<List<Object>> errorResponse = ApiResponse.success(null);
+
+        mapper.writeValue(response.getOutputStream(), errorResponse);
+    }
+}
