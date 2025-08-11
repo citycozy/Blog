@@ -1,12 +1,10 @@
 package com.dohyun.blog.security.userdetails;
 
 import com.dohyun.blog.member.entity.Member;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.ArrayList;
 import java.util.Collection;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 public record UserDetailsImpl(Member member) implements UserDetails {
 

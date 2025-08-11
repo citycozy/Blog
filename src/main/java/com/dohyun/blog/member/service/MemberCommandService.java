@@ -13,7 +13,10 @@ public class MemberCommandService {
     private final MemberQueryService memberQueryService;
     private final PasswordEncoder passwordEncoder;
 
-    public MemberCommandService(MemberRepository memberRepository, MemberQueryService memberQueryService, PasswordEncoder passwordEncoder) {
+    public MemberCommandService(
+            MemberRepository memberRepository,
+            MemberQueryService memberQueryService,
+            PasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
         this.memberQueryService = memberQueryService;
         this.passwordEncoder = passwordEncoder;
@@ -25,5 +28,4 @@ public class MemberCommandService {
 
         memberRepository.save(Member.to(request, passwordEncoder));
     }
-
 }

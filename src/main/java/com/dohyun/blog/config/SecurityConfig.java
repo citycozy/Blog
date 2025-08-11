@@ -3,7 +3,6 @@ package com.dohyun.blog.config;
 import com.dohyun.blog.security.handler.CustomAuthenticationFailureHandler;
 import com.dohyun.blog.security.handler.CustomAuthenticationSuccessHandler;
 import com.dohyun.blog.security.handler.CustomLogoutSuccessHandler;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,9 +16,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private static final String[] allowUrls = {
-            "/api/users/signup", "/api/users/login"
-    };
+    private static final String[] allowUrls = {"/api/users/signup", "/api/users/login"};
 
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
@@ -36,36 +33,29 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(AbstractHttpConfigurer::disable)
+        return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(
-                        authorize -> authorize
-                                .requestMatchers(allowUrls).permitAll()
-                                .anyRequest().authenticated()
-                )
+                        authorize ->
+                                authorize
+                                        .requestMatchers(allowUrls)
+                                        .permitAll()
+                                        .anyRequest()
+                                        .authenticated())
                 .formLogin(
-                        auth -> auth
-                                .loginProcessingUrl("/api/users/login")
-                                .failureHandler(customAuthenticationFailureHandler)
-                                .successHandler(customAuthenticationSuccessHandler)
-                                .permitAll()
-                )
+                        auth ->
+                                auth.loginProcessingUrl("/api/users/login")
+                                        .failureHandler(customAuthenticationFailureHandler)
+                                        .successHandler(customAuthenticationSuccessHandler)
+                                        .permitAll())
                 .logout(
-                        logout -> logout
-                                .logoutUrl("/api/users/logout")
-                                .logoutSuccessHandler(customLogoutSuccessHandler)
-                                .invalidateHttpSession(true)
-                                .deleteCookies("JSESSIONID")
-                )
+                        logout ->
+                                logout.logoutUrl("/api/users/logout")
+                                        .logoutSuccessHandler(customLogoutSuccessHandler)
+                                        .invalidateHttpSession(true)
+                                        .deleteCookies("JSESSIONID"))
                 .sessionManagement(
-                        session -> session
-                                .maximumSessions(1)
-                                .maxSessionsPreventsLogin(true)
-                )
-                .sessionManagement(
-                        session -> session
-                                .sessionFixation().changeSessionId()
-                )
+                        session -> session.maximumSessions(1).maxSessionsPreventsLogin(true))
+                .sessionManagement(session -> session.sessionFixation().changeSessionId())
                 .build();
     }
 

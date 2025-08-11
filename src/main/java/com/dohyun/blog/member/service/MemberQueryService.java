@@ -20,33 +20,39 @@ public class MemberQueryService {
     }
 
     public Member getMemberByEmail(String email) {
-        return memberRepository.findByEmail(email)
-                .orElseThrow(
-                        () -> new NotFoundException(NotFoundMsg.MEMBER));
+        return memberRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new NotFoundException(NotFoundMsg.MEMBER));
     }
 
     public Member getMemberById(Long memberId) {
-        return memberRepository.findById(memberId)
-                .orElseThrow(
-                        () -> new NotFoundException(NotFoundMsg.MEMBER));
+        return memberRepository
+                .findById(memberId)
+                .orElseThrow(() -> new NotFoundException(NotFoundMsg.MEMBER));
     }
 
     public void validEmail(String email) {
-        memberRepository.findByEmail(email).ifPresent(
-                member -> {
-                    throw new ConflictException(ConflictMsg.EMAIL);
-                });
+        memberRepository
+                .findByEmail(email)
+                .ifPresent(
+                        member -> {
+                            throw new ConflictException(ConflictMsg.EMAIL);
+                        });
     }
 
     public void validNickname(String nickname) {
-        memberRepository.findByNickname(nickname).ifPresent(
-                member -> {
-                    throw new ConflictException(ConflictMsg.NICKNAME);
-                });
+        memberRepository
+                .findByNickname(nickname)
+                .ifPresent(
+                        member -> {
+                            throw new ConflictException(ConflictMsg.NICKNAME);
+                        });
     }
 
     public Member getContextMember() {
-        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserDetailsImpl userDetails =
+                (UserDetailsImpl)
+                        SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         return userDetails.getMember();
     }

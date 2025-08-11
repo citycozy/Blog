@@ -20,8 +20,9 @@ public class MemberController {
 
     @PostMapping("/signup")
     public ResponseEntity<ApiResponse<MemberResponse.Signup>> signup(
-            @RequestBody MemberRequest.Signup request ){
-        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.create(memberFacade.signup(request)));
+            @RequestBody MemberRequest.Signup request) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.create(memberFacade.signup(request)));
     }
 
     @GetMapping("/login")

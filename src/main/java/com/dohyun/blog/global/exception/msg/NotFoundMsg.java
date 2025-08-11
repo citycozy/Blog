@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 public enum NotFoundMsg {
-
     MEMBER("존재하지 않는 회원입니다."),
     ;
 

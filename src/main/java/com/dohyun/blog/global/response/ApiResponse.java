@@ -11,7 +11,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @JsonPropertyOrder({"isSuccess", "code", "message", "data"})
-public class ApiResponse <T>{
+public class ApiResponse<T> {
 
     @JsonProperty("isSuccess")
     private boolean success;
@@ -24,13 +24,11 @@ public class ApiResponse <T>{
     private T data;
 
     public static <T> ApiResponse<T> success(T data) {
-        return new ApiResponse<>(
-                true, "200", "요청에 성공하였습니다.", data);
+        return new ApiResponse<>(true, "200", "요청에 성공하였습니다.", data);
     }
 
     public static <T> ApiResponse<T> create(T data) {
-        return new ApiResponse<>(
-                true, "201", "리소스가 성공적으로 생성되었습니다.", data);
+        return new ApiResponse<>(true, "201", "리소스가 성공적으로 생성되었습니다.", data);
     }
 
     public static <T> ApiResponse<T> fail(ApiException e) {
@@ -39,7 +37,6 @@ public class ApiResponse <T>{
     }
 
     public static <T> ApiResponse<T> fail(String message) {
-        return new ApiResponse<>(
-                false, "400", message, null);
+        return new ApiResponse<>(false, "400", message, null);
     }
 }
