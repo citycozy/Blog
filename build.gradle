@@ -57,7 +57,7 @@ spotless {
     }
 }
 
-tasks.named('compileJava') {
+tasks.named('build') {
     dependsOn 'spotlessApply'
 }
 tasks.named('test') {

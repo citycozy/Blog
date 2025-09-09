@@ -9,8 +9,10 @@ import com.dohyun.blog.member.repository.MemberRepository;
 import com.dohyun.blog.security.userdetails.UserDetailsImpl;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional(readOnly = true)
 public class MemberQueryService {
 
     private final MemberRepository memberRepository;
@@ -31,7 +33,7 @@ public class MemberQueryService {
                 .orElseThrow(() -> new NotFoundException(NotFoundMsg.MEMBER));
     }
 
-    public void validEmail(String email) {
+    public void existsByEmail(String email) {
         memberRepository
                 .findByEmail(email)
                 .ifPresent(
@@ -40,7 +42,7 @@ public class MemberQueryService {
                         });
     }
 
-    public void validNickname(String nickname) {
+    public void existsByNickname(String nickname) {
         memberRepository
                 .findByNickname(nickname)
                 .ifPresent(

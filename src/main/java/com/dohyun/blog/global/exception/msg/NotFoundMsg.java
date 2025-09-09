@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum NotFoundMsg {
     MEMBER("존재하지 않는 회원입니다."),
+    EMAIL("존재하지 않는 이메일입니다.")
     ;
 
     private final String msg;
